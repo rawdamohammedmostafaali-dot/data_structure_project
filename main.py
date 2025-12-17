@@ -1,14 +1,11 @@
 import json
 from datetime import datetime, timedelta
-
-# ---------------- File Handling ----------------
 def load_data(filename):
     try:
         with open(filename, "r") as f:
             return json.load(f)
     except:
         return {}
-
 def save_data(filename, data):
     with open(filename, "w") as f:
         json.dump(data, f, indent=4)
@@ -16,9 +13,6 @@ def save_data(filename, data):
 donors = load_data("donors.json")
 recipients = load_data("recipients.json")
 blood_stock = load_data("blood_stock.json")
-
-
-# ---------------- Validation ----------------
 def is_safe_donor(donor):
     age = donor["age"]
     last_donation = datetime.strptime(donor["last_donation"], "%Y-%m-%d")
@@ -33,9 +27,6 @@ def is_safe_donor(donor):
     if donor["other_problem"] != "no":
         return False
     return True
-
-
-# ---------------- Donor ----------------
 def donor_register():
     donor_id = input("ID: ")
     donors[donor_id] = {
@@ -71,9 +62,6 @@ def donation_request(donor_id):
         print("🩸 Donation Accepted")
     else:
         print("❌ Donation Rejected (Not Safe Donor)")
-
-
-# ---------------- Recipient ----------------
 def recipient_register():
     rid = input("ID: ")
     recipients[rid] = {
@@ -100,9 +88,6 @@ def recipient_login():
 def search_blood():
     blood = input("Blood Type: ")
     print("Available Quantity:", blood_stock.get(blood, 0))
-
-
-# ---------------- Admin ----------------
 def admin_menu():
     while True:
         print("\n--- Admin Menu ---")
@@ -126,9 +111,6 @@ def admin_menu():
             save_data("blood_stock.json", blood_stock)
         elif ch == "5":
             break
-
-
-# ---------------- Main ----------------
 def main():
     while True:
         print("\n🩸 Blood Bank Management System")
@@ -165,6 +147,5 @@ def main():
         elif choice == "4":
             print("Goodbye 👋")
             break
-
 main()
 
